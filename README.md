@@ -1,13 +1,13 @@
 
 # tohoku_sd_preparation
 
-## 画像データの準備
+## Setup images
 
 ```bash
 # setup
 poetry install
 
-# Donwload images
+# Download images
 poetry run python scripts/download.py -i ./url_list -o ./data/img_original 
 
 # Remove alphas, margins and shrink images
