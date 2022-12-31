@@ -19,3 +19,9 @@ find data/img_original/ -type f | xargs -t  -P 2 -I {} bash ./scripts/convert_im
 mkdir train
 find ./data/img_converted_selected/ -type f | grep '\.png$' | parallel -t convert -fuzz 5% -trim -resize 512x512 -gravity center -extent 512x512 {} train/{/.}.png
 ```
+
+## Prefix
+
+- ``_oc``: Official costume
+- ``_sd``: SD character
+- ``_normal``: Normal-sized character
