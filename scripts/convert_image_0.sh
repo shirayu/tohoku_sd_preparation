@@ -7,9 +7,9 @@ if [ "$2" == "" ]; then
     exit 1
 fi
 
-OUTDIR="$2/$(dirname $1)"
+OUTDIR="$2/$(basename "$(dirname "$1")")"
 mkdir -p "${OUTDIR}"
-OUTNAME="$2/$1"
+OUTNAME="${OUTDIR}/$(basename $1)"
 
 PROC=1
 MAXSIZE=2048
