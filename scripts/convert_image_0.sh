@@ -11,11 +11,18 @@ OUTDIR="$2/$(basename "$(dirname "$1")")"
 mkdir -p "${OUTDIR}"
 OUTNAME="${OUTDIR}/$(basename $1)"
 
-PROC=1
-MAXSIZE=2048
-MAX_MEMORY="20480MB"
+MAX_SIZE="${MAX_SIZE:-2048}"
 
 # Only minimize (not enlarge)
-
-convert -limit memory ${MAX_MEMORY} -background white -alpha remove -alpha off -fuzz 5% -trim -resize ${MAXSIZE}x${MAXSIZE}^ -gravity center "$1" "${OUTNAME}"
-# -extent ${MAXSIZE}x${MAXSIZE}
+MAGICK_CONFIGURE_PATH=~/.config/ImageMagick.xml \
+convert \
+    -limit disk 0 \
+    -background white \
+    -alpha remove \
+    -alpha off \
+    -fuzz 5% \
+    -trim \
+    -resize "${MAX_SIZE}x${MAX_SIZE}^" \
+    -gravity center \
+    "$1" \
+    "${OUTNAME}"
