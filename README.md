@@ -29,8 +29,14 @@ find data/img_original -type f | xargs -t -P 4 -I {} bash ./scripts/convert_imag
 find data/img_converted -type f | xargs -t -P 4 -I {} bash ./scripts/convert_image_1.sh {} data/img_train 768x768
 ```
 
-## Prefix
+### Prefix
 
 - ``_oc``: Official costume
 - ``_sd``: SD character
 - ``_normal``: Normal-sized character
+
+## Preparation
+
+```bash
+python ./scripts/prepare_for_kohya_ss_sd_scripts.py -i ./data/img_train -o ./data/img_train_2
+```
