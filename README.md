@@ -15,9 +15,8 @@ find data/img_original/ -type f | xargs -t  -P 2 -I {} bash ./scripts/convert_im
 
 # Check files in "img_converted" with  your eyes
 
-# Resize to 512x512
-mkdir train
-find ./data/img_converted_selected/ -type f | grep '\.png$' | parallel -t convert -fuzz 5% -trim -resize 512x512 -gravity center -extent 512x512 {} train/{/.}.png
+# Resize to 768x768
+find data/img_converted -type f | xargs -t  -P 4 -I {} bash ./scripts/convert_image_1.sh {} data/img_train 768x768
 ```
 
 ## Prefix
