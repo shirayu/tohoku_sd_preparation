@@ -8,7 +8,7 @@ from pathlib import Path
 
 def name2prompt(name: str) -> str:
     items = name.split("_")
-    prompt = ["1girl"]
+    prompt = []
 
     t: str = items[0]
     prompt.append(t)
@@ -20,6 +20,7 @@ def name2prompt(name: str) -> str:
 
     if "oc" in items:
         prompt.append(f"{t}_oc")
+    prompt.append("1girl")
 
     return ", ".join(prompt)
 
