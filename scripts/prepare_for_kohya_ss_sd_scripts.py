@@ -5,12 +5,16 @@ import random
 import shutil
 from pathlib import Path
 
+name2newname = {
+    "melon": "hokamel",
+}
+
 
 def name2prompt(name: str) -> str:
     items = name.split("_")
     prompt = []
 
-    t: str = items[0]
+    t: str = name2newname.get(items[0], items[0])
     prompt.append(t)
 
     if "fairy" in items:
