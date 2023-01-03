@@ -33,7 +33,6 @@ find data/img_converted -type f | xargs -t -P 4 -I {} bash ./scripts/convert_ima
 
 - ``_oc``: Official costume
 - ``_sd``: SD character
-- ``_normal``: Normal-sized character
 
 ## Preparation
 
