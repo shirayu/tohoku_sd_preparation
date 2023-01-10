@@ -8,9 +8,9 @@ from typing import Optional
 
 name2newname = {
     "melon": "hokamel",
-    "zunko_oc": "zuncos",
-    "kiritan_oc": "kiricos",
-    "itako_oc": "itacos",
+    "zunko_oc": "zuoc",
+    "kiritan_oc": "kioc",
+    "itako_oc": "itoc",
 }
 
 
@@ -34,7 +34,8 @@ def name2prompt(
             return
 
     if "oc" in items:
-        prompt.append(name2newname[f"{t}_oc"])
+        assert prompt[-1] in {"zunko", "kiritan", "itako"}
+        prompt[-1] = name2newname[f"{prompt[-1]}_oc"]
     prompt.append("1girl")
 
     return ", ".join(prompt)
