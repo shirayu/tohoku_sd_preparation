@@ -4,13 +4,21 @@ import argparse
 import random
 import shutil
 from pathlib import Path
+from typing import Optional
 
 name2newname = {
     "melon": "hokamel",
+    "zunko_oc": "zuncos",
+    "kiritan_oc": "kiricos",
+    "itako_oc": "itacos",
 }
 
 
-def name2prompt(name: str) -> str:
+def name2prompt(
+    *,
+    name: str,
+    nosd: bool,
+) -> Optional[str]:
     items = name.split("_")
     prompt = []
 
@@ -18,12 +26,15 @@ def name2prompt(name: str) -> str:
     prompt.append(t)
 
     if "fairy" in items:
-        prompt[-1] += "_fairy"
+        assert prompt[-1] == "zundamon"
+        prompt[-1] += "zunfair"
     if "sd" in items:
         prompt[-1] += "_sd"
+        if nosd:
+            return
 
     if "oc" in items:
-        prompt.append(f"{t}_oc")
+        prompt.append(name2newname[f"{t}_oc"])
     prompt.append("1girl")
 
     return ", ".join(prompt)
@@ -37,6 +48,7 @@ def operation(
     num_max: int,
     seed: int,
     num_repeat: int,
+    nosd: bool,
 ) -> None:
     assert num_min < num_max
     assert path_in.is_dir()
@@ -47,7 +59,13 @@ def operation(
         if len(files) < num_min:
             continue
 
-        out_dir_name: str = f"{num_repeat}_" + name2prompt(path_target_dir.name)
+        p = name2prompt(
+            name=path_target_dir.name,
+            nosd=nosd,
+        )
+        if p is None:
+            continue
+        out_dir_name: str = f"{num_repeat}_{p}"
         out_dir: Path = path_out.joinpath(out_dir_name)
         out_dir.mkdir(exist_ok=True, parents=True)
 
@@ -66,6 +84,7 @@ def get_opts() -> argparse.Namespace:
     oparser.add_argument("--max", type=int, default=16)
     oparser.add_argument("--seed", type=int, default=42)
     oparser.add_argument("--repeat", type=int, default=1)
+    oparser.add_argument("--nosd", action="store_true")
     return oparser.parse_args()
 
 
@@ -78,6 +97,7 @@ def main() -> None:
         num_max=opts.max,
         seed=opts.seed,
         num_repeat=opts.repeat,
+        nosd=opts.nosd,
     )
 
 
