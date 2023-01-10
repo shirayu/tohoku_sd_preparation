@@ -27,7 +27,7 @@ def name2prompt(
 
     if "fairy" in items:
         assert prompt[-1] == "zundamon"
-        prompt[-1] += "zunfair"
+        prompt[-1] = "zfr"
     if "sd" in items:
         prompt[-1] += "_sd"
         if nosd:
