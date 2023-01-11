@@ -25,7 +25,7 @@ find data/img_original -type f | xargs -t -P 4 -I {} bash ./scripts/convert_imag
 
 # Check files in "img_converted" with your eyes
 
-# Resize to 448x640
+# Resize to 768x1024
 find data/img_converted -type f | xargs -t -P 4 -I {} bash ./scripts/convert_image_1.sh {} data/img_train_768x1024 768x1024
 ```
 
