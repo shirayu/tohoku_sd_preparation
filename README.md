@@ -25,8 +25,8 @@ find data/img_original -type f | xargs -t -P 4 -I {} bash ./scripts/convert_imag
 
 # Check files in "img_converted" with your eyes
 
-# Resize to 768x1024
-find data/img_converted -type f | xargs -t -P 4 -I {} bash ./scripts/convert_image_1.sh {} data/img_train_768x1024 768x1024
+# Resize to 512x704
+find data/img_converted -type f | xargs -t -P 4 -I {} bash ./scripts/convert_image_1.sh {} data/img_train_512x704 512x704
 ```
 
 ### Prefix
@@ -37,6 +37,6 @@ find data/img_converted -type f | xargs -t -P 4 -I {} bash ./scripts/convert_ima
 ## Preparation
 
 ```bash
-python ./scripts/prepare_for_kohya_ss_sd_scripts.py -i ./data/img_train_768x1024 -o ./data/dreambooth/img_train --nosd --repeat 5
+python ./scripts/prepare_for_kohya_ss_sd_scripts.py -i ./data/img_train_512x704 -o ./data/dreambooth/img_train --nosd --repeat 3 --num 28
 mkdir -p ./data/dreambooth/img_reg
 ```
