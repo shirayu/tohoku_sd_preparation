@@ -20,27 +20,26 @@ def name2prompt(
     suffix: str,
 ) -> Optional[str]:
     items = name.split("_")
-    prompt = []
 
-    t: str = name2newname.get(items[0], items[0])
-    prompt.append(t)
+    prompt: str = name2newname.get(items[0], items[0])
 
     if "fairy" in items:
-        assert prompt[-1] == "zundamon"
-        prompt[-1] = "zfr"
+        assert prompt == "zundamon"
+        prompt = "zfr"
     if "sd" in items:
-        prompt[-1] += "_sd"
+        prompt += "_sd"
         if nosd:
             return
 
     if "oc" in items:
-        assert prompt[-1] in {"zunko", "kiritan", "itako"}
-        prompt[-1] = name2newname[f"{prompt[-1]}_oc"]
+        c: str = prompt.split("_")[0]
+        assert c in {"zunko", "kiritan", "itako"}
+        prompt = name2newname[f"{c}_oc"]
 
     if len(suffix) > 0:
-        prompt.append(suffix)
+        prompt += suffix
 
-    return ", ".join(prompt)
+    return prompt
 
 
 def operation(
