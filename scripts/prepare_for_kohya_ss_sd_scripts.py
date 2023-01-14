@@ -17,6 +17,7 @@ def name2prompt(
     *,
     name: str,
     nosd: bool,
+    suffix: str,
 ) -> Optional[str]:
     items = name.split("_")
     prompt = []
@@ -35,7 +36,9 @@ def name2prompt(
     if "oc" in items:
         assert prompt[-1] in {"zunko", "kiritan", "itako"}
         prompt[-1] = name2newname[f"{prompt[-1]}_oc"]
-    prompt.append("1girl")
+
+    if len(suffix) > 0:
+        prompt.append(suffix)
 
     return ", ".join(prompt)
 
@@ -49,6 +52,8 @@ def operation(
     seed: int,
     num_repeat: int,
     nosd: bool,
+    nodup: bool,
+    suffix: str,
 ) -> None:
     assert num_min < num
     assert path_in.is_dir()
@@ -61,6 +66,7 @@ def operation(
         p = name2prompt(
             name=path_target_dir.name,
             nosd=nosd,
+            suffix=suffix,
         )
         if p is None:
             continue
@@ -77,6 +83,8 @@ def operation(
                 done_count += 1
                 if done_count >= num:
                     break
+            if nodup:
+                break
 
 
 def get_opts() -> argparse.Namespace:
@@ -88,6 +96,8 @@ def get_opts() -> argparse.Namespace:
     oparser.add_argument("--seed", type=int, default=42)
     oparser.add_argument("--repeat", type=int, default=1)
     oparser.add_argument("--nosd", action="store_true")
+    oparser.add_argument("--nodup", action="store_true")
+    oparser.add_argument("--suffix", action="")
     return oparser.parse_args()
 
 
@@ -101,6 +111,8 @@ def main() -> None:
         seed=opts.seed,
         num_repeat=opts.repeat,
         nosd=opts.nosd,
+        nodup=opts.nodup,
+        suffix=opts.suffix,
     )
 
 
