@@ -97,7 +97,7 @@ def get_opts() -> argparse.Namespace:
     oparser.add_argument("--repeat", type=int, default=1)
     oparser.add_argument("--nosd", action="store_true")
     oparser.add_argument("--nodup", action="store_true")
-    oparser.add_argument("--suffix", action="")
+    oparser.add_argument("--suffix", default="")
     return oparser.parse_args()
 
 
