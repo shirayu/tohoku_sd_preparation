@@ -1,0 +1,27 @@
+{
+    "zunko": [
+        "green_hair",
+        "long_hair",
+        "very_long_hair",
+        "yellow_eyes",
+        "hairband",
+        "green_hairband",
+        "ahoge"
+    ],
+    "zunko_oc": [
+        "japanese_clothes",
+        "kimono",
+        "sash",
+        "tabi",
+        "obi",
+        "short_kimono",
+        "muneate",
+        "socks",
+        "tasuki",
+        "sandals",
+        "white_kimono",
+        "short_sleeves",
+        "zouri",
+        "green_kimono"
+    ]
+}
