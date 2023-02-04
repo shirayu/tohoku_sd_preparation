@@ -27,6 +27,11 @@ find data/img_original -type f | xargs -t -P 4 -I {} bash ./scripts/convert_imag
 
 # Resize to 512x704
 find data/img_converted -type f | xargs -t -P 4 -I {} bash ./scripts/convert_image_1.sh {} data/img_train_512x704 512x704
+
+# Filter out
+python ./scripts/filtered_copy.py --ex ./target_list/exclude.tsv -i ./data/img_train_512x704 -o ./data/img_train_512x704_filtered
+
+# Generate captions
 ```
 
 ### Prefix
