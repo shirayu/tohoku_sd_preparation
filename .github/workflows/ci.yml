@@ -34,8 +34,8 @@ jobs:
           path: .venv
           key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-${{ hashFiles('**/package-lock.json') }}
 
-      - run: poetry env use ${{ matrix.python-version }}
       - run: pip install poetry
+      - run: poetry env use ${{ matrix.python-version }}
       - run: poetry install
 
       - uses: actions/setup-node@v3
