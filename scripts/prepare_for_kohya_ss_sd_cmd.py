@@ -30,6 +30,7 @@ def operation(
             continue
 
         fullpath_model: str = str(path_model.absolute())
+        fullpath_log: str = str(path_model.joinpath("log").absolute())
         fullpath_train: str = str(pathdir.absolute())
         opt_fullpath_reg: str = ""
         if path_reg is not None:
@@ -50,6 +51,7 @@ poetry run \\
     --dynamo_backend "no" \\
     train_network.py \\
     --pretrained_model_name_or_path={fullpath_model} \\
+    --logging_dir={fullpath_log} \\
     --train_data_dir={fullpath_train} \\
     --output_dir={fullpath_output} \\
     --prior_loss_weight=1.0 \\
