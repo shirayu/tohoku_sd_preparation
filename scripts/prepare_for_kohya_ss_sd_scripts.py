@@ -35,7 +35,6 @@ def name2prompt(
         assert c in {"zunko", "kiritan", "itako"}
         prompt = name2newname[f"{c}_oc"]
 
-
     return prompt
 
 
@@ -43,20 +42,15 @@ def operation(
     *,
     path_in: Path,
     path_out: Path,
-    num_min: int,
-    num: int,
     seed: int,
     num_repeat: int,
     nosd: bool,
     nodup: bool,
 ) -> None:
-    assert num_min < num
     assert path_in.is_dir()
 
     for path_target_dir in path_in.iterdir():
         files = [fp for fp in path_target_dir.iterdir()]
-        if len(files) < num_min:
-            continue
 
         p = name2prompt(
             name=path_target_dir.name,
@@ -69,24 +63,17 @@ def operation(
         out_dir.mkdir(exist_ok=True, parents=True)
 
         done_count: int = 0
-        while done_count < num:
-            for tgt in files:
-                to = out_dir.joinpath(f"{done_count:04}.png")
-                print(f"{tgt} -> {to}")
-                shutil.copy(tgt, to)
-                done_count += 1
-                if done_count >= num:
-                    break
-            if nodup:
-                break
+        for tgt in files:
+            to = out_dir.joinpath(f"{done_count:04}.png")
+            print(f"{tgt} -> {to}")
+            shutil.copy(tgt, to)
+            done_count += 1
 
 
 def get_opts() -> argparse.Namespace:
     oparser = argparse.ArgumentParser()
     oparser.add_argument("--input", "-i", type=Path, required=True)
     oparser.add_argument("--output", "-o", type=Path, required=True)
-    oparser.add_argument("--min", type=int, default=4)
-    oparser.add_argument("--num", type=int, default=28)
     oparser.add_argument("--seed", type=int, default=42)
     oparser.add_argument("--repeat", type=int, default=1)
     oparser.add_argument("--nosd", action="store_true")
@@ -99,8 +86,6 @@ def main() -> None:
     operation(
         path_in=opts.input,
         path_out=opts.output,
-        num_min=opts.min,
-        num=opts.num,
         seed=opts.seed,
         num_repeat=opts.repeat,
         nosd=opts.nosd,
