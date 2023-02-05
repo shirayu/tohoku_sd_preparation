@@ -32,7 +32,7 @@
         "high_ponytail",
         "large_breasts"
     ],
-    "itako_oc": [
+    "itoc": [
         "japanese_clothes",
         "kimono",
         "obi",
@@ -53,17 +53,7 @@
         "slippers",
         "zouri"
     ],
-    "kiritan": [
-        "ahoge",
-        "red_eyes",
-        "headgear",
-        "brown_hair",
-        "twintails",
-        "short_hair",
-        "black_hair",
-        "purple_hair"
-    ],
-    "kiritan_oc": [
+    "kioc": [
         "japanese_clothes",
         "kimono",
         "pleated_skirt",
@@ -83,6 +73,16 @@
         "sleeves_past_wrists",
         "miniskirt",
         "scarf"
+    ],
+    "kiritan": [
+        "ahoge",
+        "red_eyes",
+        "headgear",
+        "brown_hair",
+        "twintails",
+        "short_hair",
+        "black_hair",
+        "purple_hair"
     ],
     "melon": [
         "blue_eyes",
@@ -139,6 +139,13 @@
         "bags_under_eyes",
         "very_long_hair"
     ],
+    "zfr": [
+        "blush_stickers",
+        "full_body",
+        "no_humans",
+        "pokemon_(creature)",
+        "black_eyes"
+    ],
     "zundamon": [
         "green_hair",
         "green_footwear",
@@ -149,13 +156,6 @@
         "orange_eyes",
         "long_hair"
     ],
-    "zundamon_fairy": [
-        "blush_stickers",
-        "full_body",
-        "no_humans",
-        "pokemon_(creature)",
-        "black_eyes"
-    ],
     "zunko": [
         "green_hair",
         "long_hair",
@@ -165,7 +165,7 @@
         "green_hairband",
         "ahoge"
     ],
-    "zunko_oc": [
+    "zuoc": [
         "japanese_clothes",
         "kimono",
         "sash",

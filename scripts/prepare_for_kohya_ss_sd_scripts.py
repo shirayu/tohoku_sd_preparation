@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 import argparse
+import json
 import shutil
 from pathlib import Path
-from typing import Optional
+from typing import List, Optional, Set
 
 name2newname = {
     "melon": "hokamel",
@@ -46,34 +47,54 @@ def operation(
     num_repeat: int,
     nosd: bool,
     nodup: bool,
+    tag: Path,
+    tag_target: Path,
 ) -> None:
     assert path_in.is_dir()
+
+    with tag.open() as inf:
+        name2tags = json.load(inf)
+
+    with tag_target.open() as inf:
+        chara2target_tags = json.load(inf)
 
     for path_target_dir in path_in.iterdir():
         files = [fp for fp in path_target_dir.iterdir()]
 
-        p = name2prompt(
+        chara = name2prompt(
             name=path_target_dir.name,
             nosd=nosd,
         )
-        if p is None:
+        if chara is None or chara not in chara2target_tags:
+            print(f"{chara}: SKIP!!")
             continue
-        out_dir_name: str = f"{num_repeat}_{p}"
-        out_dir: Path = path_out.joinpath(out_dir_name)
+
+        out_dir_name: str = f"{num_repeat}_{chara}"
+        out_dir: Path = path_out.joinpath(chara, out_dir_name)
         out_dir.mkdir(exist_ok=True, parents=True)
 
-        done_count: int = 0
+        target_tags: Set[str] = set(chara2target_tags[chara])
+
+        print(f"{chara}: {len(files)}")
         for tgt in files:
-            to = out_dir.joinpath(f"{done_count:04}.png")
-            print(f"{tgt} -> {to}")
+            tags: List[str] = name2tags[tgt.stem]
+            tags = list(filter(lambda v: v not in target_tags, tags))
+            tags.insert(0, chara)
+            to_caption = out_dir.joinpath(f"{tgt.stem}.txt")
+            with to_caption.open("w") as of:
+                of.write(", ".join(tags))
+                of.write("\n")
+
+            to = out_dir.joinpath(f"{tgt.name}")
             shutil.copy(tgt, to)
-            done_count += 1
 
 
 def get_opts() -> argparse.Namespace:
     oparser = argparse.ArgumentParser()
     oparser.add_argument("--input", "-i", type=Path, required=True)
     oparser.add_argument("--output", "-o", type=Path, required=True)
+    oparser.add_argument("--tag", type=Path, required=True)
+    oparser.add_argument("--tag-target", type=Path, required=True)
     oparser.add_argument("--seed", type=int, default=42)
     oparser.add_argument("--repeat", type=int, default=1)
     oparser.add_argument("--nosd", action="store_true")
@@ -90,6 +111,8 @@ def main() -> None:
         num_repeat=opts.repeat,
         nosd=opts.nosd,
         nodup=opts.nodup,
+        tag=opts.tag,
+        tag_target=opts.tag_target,
     )
 
 

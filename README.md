@@ -32,6 +32,7 @@ find data/img_converted -type f | xargs -t -P 4 -I {} bash ./scripts/convert_ima
 python ./scripts/filtered_copy.py --ex ./target_list/exclude.tsv -i ./data/img_train_512x704 -o ./data/img_train_512x704_filtered
 
 # Generate captions
+python ./scripts/prepare_for_kohya_ss_sd_scripts.py -i ./data/img_train_512x704_filtered -o ./data/img_train_all --nosd --repeat 5 --tag ./data/tag/tag.json --tag-target ./data/tag/tag_target.json
 ```
 
 ### Prefix
