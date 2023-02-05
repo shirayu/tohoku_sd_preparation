@@ -16,6 +16,7 @@ def operation(
     epoch: int = 10,
     dim: int = 64,
     resolution: str = "512,704",
+    bs: int = 1,
 ) -> None:
     assert path_in.exists()
     assert path_script_dir.exists()
@@ -50,7 +51,7 @@ poetry run \\
     --train_data_dir={fullpath_train} \\
     --output_dir={fullpath_output} \\
     --prior_loss_weight=1.0 \\
-    --train_batch_size=1 \\
+    --train_batch_size={bs} \\
     --lr_warmup_steps=0 \\
     --lr_scheduler='constant' \\
     --learning_rate={lr} \\
