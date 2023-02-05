@@ -39,6 +39,9 @@ python ./scripts/filtered_copy.py --ex ./target_list/exclude.tsv -i ./data/img_t
 
 # Generate captions
 python ./scripts/prepare_for_kohya_ss_sd_scripts.py -i ./data/img_train_512x704_filtered -o ./data/img_train_all --nosd --repeat 5 --tag ./data/tag/tag.json --tag-target ./data/tag/tag_target.json
+
+# Generate train scripts
+python ./scripts/prepare_for_kohya_ss_sd_cmd.py -i ./data/img_train_all -o ./data/img_train_all.cmd --ref ./data/img_reg_ACertainty/girl -C ~/workspace/3rd/sd-scripts --model ~/data/stable-diffusion/webui-models/ACertainty.ckpt
 ```
 
 ### Prefix
