@@ -17,7 +17,6 @@ def name2prompt(
     *,
     name: str,
     nosd: bool,
-    suffix: str,
 ) -> Optional[str]:
     items = name.split("_")
 
@@ -36,8 +35,6 @@ def name2prompt(
         assert c in {"zunko", "kiritan", "itako"}
         prompt = name2newname[f"{c}_oc"]
 
-    if len(suffix) > 0:
-        prompt += suffix
 
     return prompt
 
@@ -52,7 +49,6 @@ def operation(
     num_repeat: int,
     nosd: bool,
     nodup: bool,
-    suffix: str,
 ) -> None:
     assert num_min < num
     assert path_in.is_dir()
@@ -65,7 +61,6 @@ def operation(
         p = name2prompt(
             name=path_target_dir.name,
             nosd=nosd,
-            suffix=suffix,
         )
         if p is None:
             continue
@@ -96,7 +91,6 @@ def get_opts() -> argparse.Namespace:
     oparser.add_argument("--repeat", type=int, default=1)
     oparser.add_argument("--nosd", action="store_true")
     oparser.add_argument("--nodup", action="store_true")
-    oparser.add_argument("--suffix", default="")
     return oparser.parse_args()
 
 
@@ -111,7 +105,6 @@ def main() -> None:
         num_repeat=opts.repeat,
         nosd=opts.nosd,
         nodup=opts.nodup,
-        suffix=opts.suffix,
     )
 
 
