@@ -12,6 +12,9 @@ def operation(
     path_model: Path,
     path_reg: Optional[Path],
     path_script_dir: Path,
+    lr: str = "1e-3",
+    epoch: int = 10,
+    dim: int = 64,
 ) -> None:
     assert path_in.exists()
     assert path_script_dir.exists()
@@ -49,15 +52,15 @@ poetry run \\
     --train_batch_size=1 \\
     --lr_warmup_steps=0 \\
     --lr_scheduler='constant' \\
-    --learning_rate=1e-3 \\
-    --max_train_epochs=10 \\
+    --learning_rate={lr} \\
+    --max_train_epochs={epoch} \\
     --use_8bit_adam \\
     --xformers \\
     --mixed_precision=fp16 \\
     --save_every_n_epochs=1 \\
     --clip_skip=2 \\
     --seed=42 \\
-    --network_dim=64 \\
+    --network_dim={dim} \\
     --network_module=networks.lora \\
     --save_model_as=safetensors \\
     --save_precision="fp16" \\
