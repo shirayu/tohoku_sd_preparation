@@ -15,6 +15,7 @@ def operation(
     lr: str = "1e-3",
     epoch: int = 10,
     dim: int = 64,
+    resolution: str = "512,704",
 ) -> None:
     assert path_in.exists()
     assert path_script_dir.exists()
@@ -64,7 +65,7 @@ poetry run \\
     --network_module=networks.lora \\
     --save_model_as=safetensors \\
     --save_precision="fp16" \\
-    --resolution="576,832" \\
+    --resolution="{resolution}" \\
     --min_bucket_reso 256 \\
     --max_bucket_reso 1024 \\
     {opt_fullpath_reg} \\
