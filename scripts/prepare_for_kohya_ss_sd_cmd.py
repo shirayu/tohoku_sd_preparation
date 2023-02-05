@@ -13,6 +13,8 @@ def operation(
     path_reg: Optional[Path],
     path_script_dir: Path,
     lr: str = "1e-3",
+    unet_lr: str = "1e-3",
+    text_encoder_lr: str = "1e-3",
     epoch: int = 10,
     dim: int = 64,
     resolution: str = "512,704",
@@ -55,6 +57,8 @@ poetry run \\
     --lr_warmup_steps=0 \\
     --lr_scheduler='constant' \\
     --learning_rate={lr} \\
+    --unet_lr={unet_lr} \\
+    --text_encoder_lr={text_encoder_lr} \\
     --max_train_epochs={epoch} \\
     --use_8bit_adam \\
     --xformers \\
