@@ -36,7 +36,7 @@ def name2prompt(
         assert c in {"zunko", "kiritan", "itako"}
         prompt = name2newname[f"{c}_oc"]
 
-    return prompt.capitalize()
+    return prompt
 
 
 def operation(
@@ -69,17 +69,17 @@ def operation(
             print(f"{chara}: SKIP!!")
             continue
 
-        out_dir_name: str = f"{num_repeat}_{chara}"
-        out_dir: Path = path_out.joinpath(chara, out_dir_name)
+        out_dir_name: str = f"{num_repeat}_{chara.capitalize()}"
+        out_dir: Path = path_out.joinpath(chara.capitalize(), out_dir_name)
         out_dir.mkdir(exist_ok=True, parents=True)
 
         target_tags: Set[str] = set(chara2target_tags[chara])
 
-        print(f"{chara}: {len(files)}")
+        print(f"{chara.capitalize()}: {len(files)}")
         for tgt in files:
             tags: List[str] = name2tags[tgt.stem]
             tags = list(filter(lambda v: v not in target_tags, tags))
-            tags.insert(0, chara)
+            tags.insert(0, chara.capitalize())
             to_caption = out_dir.joinpath(f"{tgt.stem}.txt")
             with to_caption.open("w") as of:
                 of.write(", ".join(tags))
