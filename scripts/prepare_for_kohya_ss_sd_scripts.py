@@ -36,7 +36,7 @@ def name2prompt(
         assert c in {"zunko", "kiritan", "itako"}
         prompt = name2newname[f"{c}_oc"]
 
-    return prompt
+    return prompt.capitalize()
 
 
 def operation(
