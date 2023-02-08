@@ -12,9 +12,9 @@ def operation(
     path_model: Path,
     path_reg: Optional[Path],
     path_script_dir: Path,
-    lr: str = "1e-3",
-    unet_lr: str = "1e-3",
-    text_encoder_lr: str = "1e-3",
+    lr: str = "1e-4",
+    unet_lr: str = "1e-4",
+    text_encoder_lr: str = "1e-4",
     epoch: int = 10,
     dim: int = 64,
     resolution: str = "512,704",
@@ -28,18 +28,17 @@ def operation(
     for pathdir in path_in.iterdir():
         if not pathdir.is_dir():
             continue
+        chara: str = pathdir.name
+        path_out_chara = path_out.joinpath(chara)
 
         fullpath_model: str = str(path_model.absolute())
-        fullpath_log: str = str(path_model.joinpath("log").absolute())
+        fullpath_log: str = str(path_out_chara.joinpath("log").absolute())
         fullpath_train: str = str(pathdir.absolute())
         opt_fullpath_reg: str = ""
         if path_reg is not None:
             x = [z for z in path_reg.glob("*/*")]
             assert len(x) > 0, f"No files in {path_reg}"
             opt_fullpath_reg = f"--reg_data_dir={path_reg.absolute()}"
-
-        chara: str = pathdir.name
-        fullpath_output: str = str(path_out.joinpath(chara).absolute())
 
         CONTENT: str = f"""cd {path_script_dir.absolute()}
 
@@ -53,7 +52,7 @@ poetry run \\
     --pretrained_model_name_or_path={fullpath_model} \\
     --logging_dir={fullpath_log} \\
     --train_data_dir={fullpath_train} \\
-    --output_dir={fullpath_output} \\
+    --output_dir={path_out_chara.absolute()} \\
     --prior_loss_weight=1.0 \\
     --train_batch_size={bs} \\
     --lr_warmup_steps=0 \\
@@ -84,7 +83,8 @@ poetry run \\
     --persistent_data_loader_workers
     """
 
-        with path_out.joinpath(f"{pathdir.name}_train.sh").open("w") as outf:
+        path_out_chara.mkdir(exist_ok=True, parents=True)
+        with path_out_chara.joinpath(f"{pathdir.name}_train.sh").open("w") as outf:
             outf.write(CONTENT)
 
 
