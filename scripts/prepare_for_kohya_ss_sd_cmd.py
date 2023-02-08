@@ -80,7 +80,8 @@ poetry run \\
     --caption_extension=".txt" \\
     --keep_tokens 1 \\
     --max_data_loader_n_workers=4 \\
-    --persistent_data_loader_workers
+    --persistent_data_loader_workers \\
+    --no_metadata
     """
 
         path_out_chara.mkdir(exist_ok=True, parents=True)
