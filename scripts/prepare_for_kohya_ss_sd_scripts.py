@@ -88,7 +88,7 @@ def operation(
             tags.insert(0, chara.capitalize())
             to_caption = out_dir.joinpath(f"{tgt.stem}.txt")
             with to_caption.open("w") as of:
-                of.write(", ".join(tags))
+                of.write(", ".join(tags).replace("_", " "))
                 of.write("\n")
 
             to = out_dir.joinpath(f"{tgt.name}")
