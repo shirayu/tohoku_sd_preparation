@@ -5,6 +5,12 @@ from pathlib import Path
 from typing import Optional
 
 
+def chara2class(chara: str) -> str:
+    if chara.lower() == "zfr":
+        return "chibi"
+    return "1girl"
+
+
 def operation(
     *,
     path_in: Path,
@@ -12,6 +18,7 @@ def operation(
     path_model: Path,
     path_reg: Optional[Path],
     path_script_dir: Path,
+    use_caption: bool,
     lr: str = "1e-4",
     unet_lr: str = "1e-4",
     text_encoder_lr: str = "1e-4",
@@ -38,7 +45,11 @@ def operation(
         if path_reg is not None:
             x = [z for z in path_reg.glob("*/*")]
             assert len(x) > 0, f"No files in {path_reg}"
-            opt_fullpath_reg = f"--reg_data_dir={path_reg.absolute()}"
+            opt_fullpath_reg = f"--reg_data_dir={path_reg.joinpath(chara2class(chara)).absolute()}"
+
+        opt_captiopn: str = ""
+        if use_caption:
+            opt_captiopn = """--shuffle_caption --caption_extension=".txt" """
 
         CONTENT: str = f"""cd {path_script_dir.absolute()}
 
@@ -76,11 +87,10 @@ poetry run \\
     --max_bucket_reso 1024 \\
     {opt_fullpath_reg} \\
     --enable_bucket \\
-    --shuffle_caption \\
-    --caption_extension=".txt" \\
     --keep_tokens 1 \\
     --max_data_loader_n_workers=4 \\
     --persistent_data_loader_workers \\
+    {opt_captiopn} \\
     --no_metadata
     """
 
@@ -96,6 +106,7 @@ def get_opts() -> argparse.Namespace:
     oparser.add_argument("--model", type=Path, required=True)
     oparser.add_argument("--reg", type=Path, required=True)
     oparser.add_argument("--script-dir", "-C", type=Path, required=True)
+    oparser.add_argument("--caption", action="store_true")
 
     return oparser.parse_args()
 
@@ -108,6 +119,7 @@ def main() -> None:
         path_model=opts.model,
         path_reg=opts.reg,
         path_script_dir=opts.script_dir,
+        use_caption=opts.caption,
     )
 
 

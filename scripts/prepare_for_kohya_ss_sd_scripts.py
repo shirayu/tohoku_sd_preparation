@@ -39,6 +39,12 @@ def name2prompt(
     return prompt
 
 
+def chara2class(chara: str) -> str:
+    if chara.lower() == "zfr":
+        return "chibi"
+    return "1girl"
+
+
 def operation(
     *,
     path_in: Path,
@@ -69,7 +75,7 @@ def operation(
             print(f"{chara}: SKIP!!")
             continue
 
-        out_dir_name: str = f"{num_repeat}_{chara.capitalize()}"
+        out_dir_name: str = f"{num_repeat}_{chara.capitalize()}, {chara2class(chara)}"
         out_dir: Path = path_out.joinpath(chara.capitalize(), out_dir_name)
         out_dir.mkdir(exist_ok=True, parents=True)
 
